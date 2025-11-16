@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planova - A Future-Proof Way to Manage Your Life in Plaintext</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Gruvbox Dark Color Palette */
+            --bg-dark: #282828;
+            --bg-darker: #1d2021;
+            --bg-light: #3c3836;
+            --fg-primary: #ebdbb2;
+            --fg-secondary: #a89984;
+            --accent-red: #fb4934;
+            --accent-green: #b8bb26;
+            --accent-yellow: #fabd2f;
+            --accent-blue: #83a598;
+            --accent-purple: #d3869b;
+            --accent-aqua: #8ec07c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--fg-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-darker);
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--bg-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--accent-aqua);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+        }
+
+        .hero-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            display: block;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-yellow);
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--fg-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--accent-green);
+            color: var(--bg-darker);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(184, 187, 38, 0.3);
+        }
+
+        /* Main Content Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--bg-darker);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-aqua);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--fg-primary);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--bg-light);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-yellow);
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot-item {
+            background-color: var(--bg-light);
+            padding: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* Values List */
+        .values-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .values-list li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--bg-light);
+            border-left: 4px solid var(--accent-purple);
+            border-radius: 4px;
+            font-size: 1.1rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 6px solid var(--accent-red);
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-darker);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 2px solid var(--bg-light);
+        }
+
+        footer p {
+            font-size: 1.2rem;
+            color: var(--accent-aqua);
+            font-weight: 600;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-aqua);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid,
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <img src="images/PlanovaIcon.svg" alt="Planova Icon" class="hero-icon">
+                <h2>A Future-Proof Way to Manage Your Life in Plaintext</h2>
+                <p class="subtitle">Planova is an opinionated, lightweight Android application designed for people who want full control over their data.</p>
+                <p class="tagline">Modern life-management, without the lock-in.</p>
+                <img src="images/wide.png" alt="Planova Main Interface" class="hero-image">
+                <a href="#" class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Own Your Data. Shape Your Workflow.</h2>
+                <p>Planova doesn't bury your life inside a database or a proprietary format. Every part of your workflow : events, tasks, daily logs, reflections, and free-form notes : lives in plain, portable text files you can edit or process with any tool, on any device, today or decades from now.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Features at a Glance</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>Agenda</h3>
+                        <p>A clean and minimal calendar view powered by structured text files. Plan your day, week, and month with formats that remain readable even outside the app.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔔</div>
+                        <h3>Notifications</h3>
+                        <p>Get notified about upcoming events and never miss an important appointment. Notifications are generated directly from your plaintext event files.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✔️</div>
+                        <h3>Todo</h3>
+                        <p>A flexible task manager rooted in plaintext.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📔</div>
+                        <h3>Journal</h3>
+                        <p>Daily or free-form journaling in a format that is yours. Write thoughts, track habits, or keep logs : no templates forced, no data trapped.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Notes</h3>
+                        <p>Quick capture or long-form writing, organized your way. Plaintext means powerful interoperability: edit with any editor, process with scripts, or keep long-term archives.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Widget</h3>
+                        <p>Keep a view on your upcoming events and todos directly on your home screen. Stay organized at a glance without opening the app.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>See Planova in Action</h2>
+                <div class="screenshots">
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/main_screenshot.png" alt="Planova Main Screen">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/editor_screenshot.png" alt="Planova Editor">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/notes_list_screenshot.png" alt="Planova Notes List">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/widget_screenshot.png" alt="Planova Widget">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/refill_screenshot.png" alt="Planova Refill">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="images/Screenshots/settintgs_screenshot.png" alt="Planova Settings">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Your Sync. Your Choice.</h2>
+                <div class="highlight-box">
+                    <h3>No online account. No servers. No hidden services.</h3>
+                    <p>Planova deliberately avoids built-in sync. Why? Because you should choose how and where your data moves.</p>
+                    <p>Use Nextcloud, Dropbox, Syncthing, Git, local backups, or any method you trust. Planova works harmoniously with your existing syncing tools : without interfering or imposing.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Future-Proof by Design</h2>
+                <p>Plaintext is the ultimate format for digital longevity. No matter how apps evolve, how platforms change, or how companies come and go, your data remains accessible.</p>
+                <p>With Planova, your productivity tools won't age : because plaintext never does.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Take Back Control of Your Digital Life</h2>
+                <p>Planova gives you a calm, stable, private space to think, plan, and create : without subscriptions, without cloud lock-in, and without losing the freedom to shape your workflow.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Planova, manage your life in plaintext ! by <a href="https://rvier.fr/">Benoît HERVIER</a></p>
+            <p style="margin-top: 1rem; font-size: 1rem;"><a href="privacy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+</body>
+</html>
